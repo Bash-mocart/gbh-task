@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Install Web Api') {
+            when { changeset "demo-api-main/*"}
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Install Web App') {
+            when { changeset "demo-wevapp-main/*"}
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Build Web Api'){
+            when { changeset "demo-api-main/*"}
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Build Web Api'){
+            when { changeset "demo-webapp-main/*"}
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage (' PR check ') {
+            when {
+                branch 'PR-*'  
+            }
+            steps {
+            sh 'ansible-playbook deploy-backend.yml -i inventory.txt'
+            }
+
+        }
+        
+    }
+}

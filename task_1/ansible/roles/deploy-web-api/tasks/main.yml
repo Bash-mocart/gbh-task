@@ -1,0 +1,40 @@
+---
+- name: Clone a github repository
+  git:
+    repo: https://github.com/{{ repo_name_backend }}.git
+    dest: "{{ repo_folder_backend }}"
+    clone: yes
+    update: yes
+  register: repo_clone
+  failed_when:
+    - repo_clone.failed
+    - not 'Local modifications exist' in repo_clone.msg
+
+- name: Install dependencies
+  npm:
+    path: "{{ repo_folder_backend }}"
+
+- name: "start app"
+  shell: |       
+      pm2 start npm -f ./app.js -- run start
+  args: 
+    chdir: "{{ repo_folder_backend }}"
+
+- name: "List processes"
+  shell: |      
+      pm2 list
+  register: pm2_result 
+
+- name: "Print in the debug console"
+  debug:
+    var: pm2_result.stdout_lines
+ 
+ 
+
+
+
+
+
+     
+
+    
