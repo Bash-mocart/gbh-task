@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        stage('checkout'){
+            steps{
+                git branch: 'main', url: 'https://github.com/Bash-mocart/gbh.git'
+            }
+        }
         stage('Install Web Api') {
             when { changeset "demo-api-main/*"}
             steps {
