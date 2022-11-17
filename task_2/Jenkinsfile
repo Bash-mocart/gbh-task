@@ -10,7 +10,7 @@ pipeline {
         }
 
         stage('Install Web App') {
-            when { changeset "demo-wevapp-main/*"}
+            when { changeset "demo-webapp-main/*"}
             steps {
                 sh 'npm install'
             }
@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Build Web Api'){
+        stage('Build Web App'){
             when { changeset "demo-webapp-main/*"}
             steps {
                 sh 'npm run build'
