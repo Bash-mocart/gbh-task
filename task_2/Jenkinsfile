@@ -50,6 +50,42 @@ pipeline {
             }
         }
 
+        stage('Archive Web Api'){
+            // when { changeset "demo-webapp-main/*"}
+            steps {
+          
+                sh 'tar -czvf demo-api-main.gz demo-api-main'
+                
+            }
+        }
+
+        stage('Archive Web App'){
+            // when { changeset "demo-webapp-main/*"}
+            steps {
+          
+                sh 'tar -czvf demo-webapp-main.gz demo-webapp-main/build'
+                
+            }
+        }
+
+        stage('Copy artifacts Web Api'){
+            // when { changeset "demo-webapp-main/*"}
+            steps {
+          
+                sh 'cp demo-api-main.gz task_1/ansible/roles/deploy-web-api/files'
+                
+            }
+        }
+
+        stage('Copy artifacts Web Api'){
+            // when { changeset "demo-webapp-main/*"}
+            steps {
+          
+                sh 'cp demo-webapp-main.gz task_1/ansible/roles/deploy-web-app/files'
+                
+            }
+        }
+
         stage (' PR check ') {
             when {
                 branch 'PR-*'  
