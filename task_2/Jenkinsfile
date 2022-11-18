@@ -8,30 +8,45 @@ pipeline {
             }
         }
         stage('Install Web Api') {
-            when { changeset "demo-api-main/*"}
+            // when { changeset "demo-api-main/*"}
             steps {
-                sh 'npm install'
+                dir('demo-api-main') {
+                  sh 'npm install'
+                }
+
+                sh 'pwd'
+                sh 'ls'
+
+                
             }
         }
 
         stage('Install Web App') {
-            when { changeset "demo-webapp-main/*"}
+            // when { changeset "demo-webapp-main/*"}
             steps {
-                sh 'npm install'
+                dir('demo-webapp-main') {
+                  sh 'npm install'
+                }
             }
         }
 
-        stage('Build Web Api'){
-            when { changeset "demo-api-main/*"}
-            steps {
-                sh 'npm run build'
-            }
-        }
+        // stage('Build Web Api'){
+        //     // when { changeset "demo-api-main/*"}
+        //     steps {
+        //     dir('demo-api-main') {
+        //           sh 'npm run build'
+        //         }
+            
+        //     }
+        // }
 
         stage('Build Web App'){
-            when { changeset "demo-webapp-main/*"}
+            // when { changeset "demo-webapp-main/*"}
             steps {
-                sh 'npm run build'
+                dir('demo-webapp-main') {
+                  sh 'npm run build'
+                }
+            
             }
         }
 
