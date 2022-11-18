@@ -77,7 +77,7 @@ pipeline {
             }
         }
 
-        stage('Copy artifacts Web Api'){
+        stage('Copy artifacts Web App'){
             // when { changeset "demo-webapp-main/*"}
             steps {
           
