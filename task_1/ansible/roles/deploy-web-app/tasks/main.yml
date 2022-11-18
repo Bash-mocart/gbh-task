@@ -1,34 +1,9 @@
 ---
-
-# - name: Clone a github repository
-#   git:
-#     repo: https://github.com/{{ repo_name_frontend }}.git
-#     dest: "{{ repo_folder_frontend }}"
-#     clone: yes
-#     update: yes
-#   register: repo_clone
-#   failed_when:
-#     - repo_clone.failed
-#     - not 'Local modifications exist' in repo_clone.msg
-
-# - name: Install dependencies
-#   npm:
-#     path: "{{ repo_folder_frontend }}"
-#     production: yes
-
-# - name: Build app locally
-#   tags: app, build, deploy
-#   shell: npm run build
-#   args:
-#     chdir: "{{ repo_folder_frontend }}"
-
-- name: directory copy to remote device
-  copy:
-    src: demo-webapp-main/
+  
+- name: Unarchive Web App
+  unarchive:
+    src: demo-webapp-main.gz
     dest: "{{ repo_folder_frontend }}"
-    owner: root
-    group: root
-    mode: u=rw, g=rw, o=r
   
 - name: "start app"
   shell: |       

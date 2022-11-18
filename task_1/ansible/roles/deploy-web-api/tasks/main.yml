@@ -1,18 +1,8 @@
 ---
-- name: Clone a github repository
-  git:
-    repo: https://github.com/{{ repo_name_backend }}.git
+- name: Unarchive Web App
+  unarchive:
+    src: demo-api-main.gz
     dest: "{{ repo_folder_backend }}"
-    clone: yes
-    update: yes
-  register: repo_clone
-  failed_when:
-    - repo_clone.failed
-    - not 'Local modifications exist' in repo_clone.msg
-
-- name: Install dependencies
-  npm:
-    path: "{{ repo_folder_backend }}"
 
 - name: "start app"
   shell: |       
