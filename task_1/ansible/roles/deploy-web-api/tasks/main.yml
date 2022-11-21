@@ -1,14 +1,19 @@
 ---
+- name: Creates directory n
+  file:
+    path: ~/web-api
+    state: directory
+
 - name: Unarchive Web App
   unarchive:
     src: demo-api-main.gz
-    dest: "{{ repo_folder_backend }}"
+    dest: ~/web-api
 
 - name: "start app"
   shell: |       
       pm2 start npm -f ./app.js -- run start
   args: 
-    chdir: "{{ repo_folder_backend }}"
+    chdir: ~/web-api/demo-api-main
 
 - name: "List processes"
   shell: |      

@@ -1,15 +1,19 @@
 ---
+- name: Creates directory n
+  file:
+    path: ~/web-app
+    state: directory
   
 - name: Unarchive Web App
   unarchive:
     src: demo-webapp-main.gz
-    dest: "{{ repo_folder_frontend }}"
+    dest: ~/web-app
   
 - name: "start app"
   shell: |       
-      pm2 serve build 3000 -f
+      pm2 serve build 3000
   args: 
-    chdir: "{{ repo_folder_frontend }}"
+    chdir: ~/web-app/demo-webapp-main
 
 - name: "List processes"
   shell: |      
